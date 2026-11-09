@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b3b32"><meta name="description" content="দৈনন্দিন দোয়া, হানাফি নামাজ শিক্ষা, সম্পূর্ণ কুরআন, বাংলা অনুবাদ ও তিলাওয়াত">
+<link rel="manifest" href="manifest.webmanifest">
+<title>ইসলামিক জীবন — চারু</title>
+<style>
+:root{--g:#0b3b32;--g2:#17634e;--gold:#d6b56d;--bg:#f4f7f4;--card:#fff;--ink:#18332c;--muted:#60736c;--line:#dce7df}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif}
+header{background:linear-gradient(135deg,var(--g),var(--g2));color:white;padding:20px 16px}
+header .inner,main{max-width:1020px;margin:auto}header h1{margin:0;font-size:25px}header p{margin:6px 0 0;color:#e0eee8;font-size:14px}
+main{padding:14px}.top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}.top button,.action{border:0;border-radius:10px;padding:10px 13px;background:var(--g);color:white;font-weight:650;cursor:pointer}.top .light{background:#e1ece5;color:var(--g)}
+.search{display:flex;gap:8px;flex:1;min-width:210px}.search input{width:100%;padding:12px;border:1px solid #ccd8d1;border-radius:11px;font-size:16px}
+nav{display:flex;gap:7px;overflow:auto;padding:4px 0 14px}.tab{white-space:nowrap;border:0;border-radius:10px;padding:10px 13px;background:#e0ebe5;color:var(--g);font-weight:650;cursor:pointer}.tab.active{background:var(--g);color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:15px;box-shadow:0 3px 12px #143d300b}
+.card h2,.card h3{color:var(--g);margin:0 0 8px}.card p{line-height:1.75;margin:6px 0}.muted{color:var(--muted)}.small{font-size:13px;color:var(--muted)}
+.notice{background:#fff8e8;border-left:4px solid var(--gold);padding:12px;border-radius:9px;line-height:1.7;margin:12px 0}
+.hidden{display:none!important}.detail{margin-top:12px}.arabic{font-family:"Noto Naskh Arabic","Amiri",serif;font-size:27px;line-height:2.1;text-align:right;direction:rtl;color:#174e3d;margin:8px 0}
+.label{font-size:12px;color:#718179;font-weight:750;margin-top:12px}.meaning{line-height:1.85}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.select{padding:10px;border:1px solid #cbd8d0;border-radius:10px;background:white;max-width:100%}
+.surah{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;width:100%;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}
+.surah strong{color:var(--g)}.ayah{border-bottom:1px solid var(--line);padding:14px 0}.ayah:last-child{border:0}.ayahnum{display:inline-flex;border-radius:50%;background:#e7f0e9;color:var(--g);width:30px;height:30px;align-items:center;justify-content:center;font-size:12px}
+audio{width:100%;height:38px;margin-top:8px}.step{padding:12px 0;border-bottom:1px solid var(--line)}.step:last-child{border:0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 10px}
+@media(max-width:540px){header h1{font-size:22px}.arabic{font-size:24px}.card{padding:13px}}
+</style>
+</head>
+<body>
+<header><div class="inner"><h1>☪ ইসলামিক জীবন — চারু</h1><p id="tagline">দৈনন্দিন দোয়া • হানাফি নামাজ শিক্ষা • সম্পূর্ণ কুরআন • ইসলামের মৌলিক জ্ঞান</p></div></header>
+<main>
+<div class="top">
+ <div class="search"><input id="search" placeholder="দোয়া, সূরা বা বিষয় খুঁজুন…"><button class="light" id="clear">মুছুন</button></div>
+ <button id="lang" class="light">English</button>
+</div>
+<nav id="tabs"></nav>
+<div id="home" class="grid"></div>
+<section id="detail" class="hidden"><button class="top light" id="back">← সব বিভাগ</button><div id="content"></div></section>
+<div class="notice"><b>ধর্মীয় নির্ভুলতা:</b> কুরআনের আরবি মূল পাঠ ও বাংলা অনুবাদ আলাদা করে দেখানো হয়েছে। অনুবাদ মূল কুরআন নয়। নামাজের নির্দেশনা হানাফি শিক্ষার সাধারণ পরিচিতি; ব্যক্তিগত মাসআলা ও মতভেদে যোগ্য আলেমের পরামর্শ নিন।</div>
+</main>
+<footer>ইসলামিক জীবন — চারু | কুরআন ডেটা: AlQuran Cloud API | অনলাইন কনটেন্ট প্রথমবার লোড হলে কিছু অংশ ক্যাশ হতে পারে</footer>
+<script>
+const API='https://api.alquran.cloud/v1';
+let language='bn', active=0, surahs=[], currentAudio=null, surahPlaylist=[], playlistIndex=0;
+const $=id=>document.getElementById(id);
+const sections=[
+['দৈনন্দিন দোয়া','Daily Duas','🤲','ঘুম, খাবার, সফর, ঘর ও দৈনন্দিন জীবনের দোয়া'],
+['নামাজ শিক্ষা','Prayer Guide','🕌','হানাফি পদ্ধতিতে অজু, পবিত্রতা ও নামাজের ধাপ'],
+['আল-কুরআন','Holy Quran','📖','১১৪টি সূরা, আরবি মূল পাঠ, বাংলা অনুবাদ ও তিলাওয়াত'],
+['প্রয়োজনীয় সূরা','Essential Surahs','🌙','নামাজে বহুল পঠিত ছোট সূরা ও আয়াত'],
+['ঈমান ও আকিদা','Faith & Aqeedah','☪','ইসলামের মৌলিক বিশ্বাস ও শিক্ষা'],
+['জিকির ও আজকার','Dhikr & Azkar','📿','সকাল-সন্ধ্যা, তাসবিহ ও ইস্তিগফার'],
+['হজ ও ওমরাহ','Hajj & Umrah','🕋','হজ-ওমরাহর ধাপ ও গুরুত্বপূর্ণ স্থান'],
+['হাদিস ও সুন্নাহ','Hadith & Sunnah','📚','নির্বাচিত হাদিস ও দৈনন্দিন সুন্নাহ'],
+['ইসলামের ইতিহাস','Islamic History','🏛️','নবী-রাসুল, সাহাবি ও ঐতিহাসিক স্থান'],
+['রোজা ও যাকাত','Fasting & Zakat','🌾','রমজান, রোজা, ফিতরা ও যাকাত'],
+['জানাজা ও দাফন','Funeral Prayer','🕊️','মৃত্যু, জানাজা ও দাফনের বিধান']
+];
+const entries=[
+{cat:0,title:'ঘুমানোর আগে দোয়া',en:'Dua before sleeping',ar:'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',pron:'বিসমিকা আল্লাহুম্মা আমূতু ওয়া আহইয়া।',meaning:'হে আল্লাহ! আপনার নামেই আমি মৃত্যুবরণ করি এবং জীবিত হই।',source:'সহিহ আল-বুখারি, ৬৩২৪।',extra:'ঘুমাতে যাওয়ার সময় রাসুলুল্লাহ ﷺ এই দোয়া পড়তেন।'},
+{cat:0,title:'ঘুম থেকে ওঠার দোয়া',en:'Dua upon waking up',ar:'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ',pron:'আলহামদু লিল্লাহিল্লাযী আহইয়ানা বা‘দা মা আমাতানা ওয়া ইলাইহিন নুশূর।',meaning:'সকল প্রশংসা আল্লাহর, যিনি আমাদের ঘুমের পর জীবিত করলেন; আর তাঁর কাছেই পুনরুত্থান।',source:'সহিহ আল-বুখারি, ৬৩১২।',extra:'ঘুম থেকে জেগে আল্লাহর প্রশংসা করার সুন্নাহ।'},
+{cat:0,title:'খাবার শুরু করার দোয়া',en:'Dua before eating',ar:'بِسْمِ اللَّهِ',pron:'বিসমিল্লাহ।',meaning:'আল্লাহর নামে (শুরু করছি)।',source:'সহিহ আল-বুখারি, ৫৩৭৬; সহিহ মুসলিম, ২০২২।',extra:'খাওয়ার শুরুতে আল্লাহর নাম নিতে হয়।'},
+{cat:0,title:'ঘর থেকে বের হওয়ার দোয়া',en:'Dua when leaving home',ar:'بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',pron:'বিসমিল্লাহি, তাওয়াক্কালতু ‘আলাল্লাহি, ওয়ালা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ।',meaning:'আল্লাহর নামে বের হচ্ছি, আল্লাহর ওপর ভরসা করলাম। আল্লাহর সাহায্য ছাড়া কোনো শক্তি ও সামর্থ্য নেই।',source:'সুনান আবু দাউদ, ৫০৯৫; জামে আত-তিরমিজি, ৩৪২৬।'},
+{cat:3,title:'সূরা আল-ফাতিহা',en:'Surah Al-Fatihah',ar:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',pron:'বিসমিল্লাহির রাহমানির রাহিম। আলহামদু লিল্লাহি রাব্বিল ‘আলামিন। আর-রাহমানির রাহিম। মালিকি ইয়াওমিদ্দিন। ইয়্যাকা না‘বুদু ওয়া ইয়্যাকা নাস্তাঈন। ইহদিনাস সিরাতাল মুস্তাকিম। সিরাতাল্লাযিনা আন‘আমতা ‘আলাইহিম, গাইরিল মাগদুবি ‘আলাইহিম ওয়ালাদ্দল্লিন।',meaning:'পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে। সকল প্রশংসা জগতসমূহের প্রতিপালক আল্লাহর। তিনি পরম করুণাময়, অসীম দয়ালু। বিচার দিনের মালিক। আমরা শুধু আপনারই ইবাদত করি এবং শুধু আপনারই সাহায্য চাই। আমাদের সরল পথ দেখান—তাদের পথ, যাদের আপনি অনুগ্রহ করেছেন; তাদের পথ নয়, যারা ক্রোধের পাত্র হয়েছে এবং যারা পথভ্রষ্ট।',source:'আল-কুরআন, সূরা আল-ফাতিহা (১:১–৭)।'},
+{cat:3,title:'সূরা আল-ইখলাস',en:'Surah Al-Ikhlas',ar:'قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',pron:'কুল হুওয়াল্লাহু আহাদ। আল্লাহুস সামাদ। লাম ইয়ালিদ ওয়া লাম ইউলাদ। ওয়া লাম ইয়াকুল্লাহু কুফুওয়ান আহাদ।',meaning:'বলুন, তিনি আল্লাহ, এক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি। আর তাঁর সমতুল্য কেউ নেই।',source:'আল-কুরআন, সূরা আল-ইখলাস (১১২:১–৪)।'},
+{cat:4,title:'ইসলামের পাঁচটি স্তম্ভ',en:'The Five Pillars of Islam',meaning:'১. শাহাদাত (ঈমানের সাক্ষ্য), ২. সালাত (নামাজ), ৩. যাকাত, ৪. সাওম (রমজানের রোজা), ৫. হজ (সামর্থ্যবান ব্যক্তির জন্য)।',source:'সহিহ আল-বুখারি, ৮; সহিহ মুসলিম, ১৬।'},
+{cat:5,title:'ইস্তিগফার',en:'Seeking forgiveness',ar:'أَسْتَغْفِرُ اللَّهَ',pron:'আস্তাগফিরুল্লাহ।',meaning:'আমি আল্লাহর কাছে ক্ষমা প্রার্থনা করছি।',extra:'নিয়মিত তাওবা ও ইস্তিগফার করা মুমিনের গুরুত্বপূর্ণ আমল।'},
+{cat:6,title:'হজের প্রধান ধাপ',en:'Main steps of Hajj',meaning:'ইহরাম ও নিয়ত, আরাফাতে অবস্থান, মুযদালিফায় অবস্থান, জামারাতে কংকর নিক্ষেপ, প্রযোজ্য ক্ষেত্রে কুরবানি, মাথা মুণ্ডন/চুল ছোট করা, তাওয়াফে ইফাদা ও সাঈসহ নির্ধারিত কাজগুলো পালন।',extra:'হজের ধরন ও ব্যক্তিগত পরিস্থিতি অনুযায়ী বিধান ভিন্ন হতে পারে; নির্ভরযোগ্য আলেম ও অনুমোদিত হজ গাইড অনুসরণ করুন।'}
+];
+const prayerSteps=[
+['১. পবিত্রতা','অজু সঠিকভাবে সম্পন্ন করুন। শরীর, পোশাক ও নামাজের স্থান নাপাকি থেকে পবিত্র রাখুন।','নামাজের আগে অজু ও পবিত্রতা আবশ্যক। অজুর ফরজ ও ভঙ্গের কারণ বিস্তারিত শিখুন।'],
+['২. সময় ও কিবলা','নামাজের ওয়াক্ত প্রবেশ করেছে নিশ্চিত করুন এবং কিবলামুখী হন।','প্রত্যেক ফরজ নামাজ নির্ধারিত ওয়াক্তে আদায় করতে হয়।'],
+['৩. নিয়ত ও তাকবির','মনে নির্দিষ্ট নামাজের নিয়ত করে “আল্লাহু আকবার” বলে নামাজ শুরু করুন।','নিয়ত মূলত অন্তরের সংকল্প; মুখে উচ্চারণকে আবশ্যক মনে করবেন না।'],
+['৪. কিয়াম ও কিরাত','সক্ষম হলে দাঁড়িয়ে কিয়াম করুন; সানা, আউযুবিল্লাহ, বিসমিল্লাহ, সূরা ফাতিহা ও প্রয়োজনীয় কিরাত পড়ুন।','হানাফি পদ্ধতিতে কিরাতের বিস্তারিত বিধান নামাজের ধরন ও জামাতের অবস্থার ওপর নির্ভর করে।'],
+['৫. রুকু ও সিজদা','“আল্লাহু আকবার” বলে রুকুতে যান, স্থিরতা বজায় রাখুন; এরপর সোজা হয়ে দুই সিজদা করুন।','প্রতিটি রুকনে ধীরস্থিরতা (তুমানিনা) বজায় রাখা জরুরি।'],
+['৬. বৈঠক ও সালাম','নির্ধারিত রাকাত শেষে বসে আত্তাহিয়্যাতু, দরুদ ও দোয়া পড়ে ডানে-বামে সালাম ফিরিয়ে নামাজ শেষ করুন।','শেষ বৈঠক, কিরাত, ওয়াজিব ও সাহু সিজদার বিধান আলাদা পাঠে বিস্তারিত শিখুন।']
+];
+const topics=[
+{title:'পাঁচ ওয়াক্ত নামাজ',text:'ফজর, যোহর, আসর, মাগরিব ও ইশা—প্রতিদিনের পাঁচ ওয়াক্ত ফরজ নামাজ। প্রত্যেকটির নির্দিষ্ট সময় রয়েছে।'},
+{title:'হানাফি পদ্ধতিতে নামাজের রাকাত',text:'প্রচলিত রাকাতের তালিকা ও সুন্নত/নফল/ফরজের পার্থক্য শেখার জন্য নির্ভরযোগ্য হানাফি ফিকহের পাঠ অনুসরণ করুন। ব্যক্তির অবস্থা, সফর ও জামাতভেদে বিধান বদলাতে পারে।'},
+{title:'অজুর ফরজ',text:'হানাফি ফিকহে অজুর চার ফরজ: সম্পূর্ণ মুখ ধোয়া, দুই হাত কনুইসহ ধোয়া, মাথার অন্তত এক-চতুর্থাংশ মাসেহ করা এবং দুই পা টাখনুসহ ধোয়া।'},
+{title:'গোসলের ফরজ',text:'হানাফি ফিকহে গোসলের তিন ফরজ: কুলি করা, নাকে পানি দেওয়া এবং সমস্ত শরীরে পানি পৌঁছানো। বিস্তারিত শর্ত ও ব্যতিক্রম আলেমের কাছ থেকে শিখুন।'}
+];
+function label(s){return language==='bn'?s[0]:s[1]}
+function initTabs(){ $('tabs').innerHTML='';sections.forEach((s,i)=>{let b=document.createElement('button');b.className='tab'+(i===active?' active':'');b.textContent=s[2]+' '+label(s);b.onclick=()=>select(i);$('tabs').appendChild(b)})}
+function select(i){active=i;initTabs();showHome();renderHome()}
+function showHome(){$('detail').classList.add('hidden');$('home').classList.remove('hidden')}
+function openDetail(markup){$('home').classList.add('hidden');$('detail').classList.remove('hidden');$('content').innerHTML=markup;window.scrollTo({top:0,behavior:'smooth'})}
+function renderHome(){
+ let q=$('search').value.trim().toLowerCase();$('home').innerHTML='';
+ if(active===2){renderQuranHome(q);return}
+ if(active===1){renderPrayerHome(q);return}
+ let list=entries.filter(e=>e.cat===active&&(!q||((e.title+' '+(e.en||'')+' '+(e.meaning||'')).toLowerCase().includes(q))));
+ if(!list.length){$('home').innerHTML='<div class="card"><h3>এই বিভাগে আরও কনটেন্ট যুক্ত হবে</h3><p>যাচাইকৃত পাঠ ও সূত্রসহ এই বিভাগ ধাপে ধাপে সম্প্রসারণ করা হবে।</p></div>';return}
+ list.forEach(e=>{let c=document.createElement('article');c.className='card';c.innerHTML=`<h3>${language==='bn'?e.title:e.en||e.title}</h3><p>${e.meaning||'আরবি পাঠ, উচ্চারণ, অর্থ ও সূত্র দেখুন।'}</p><button class="action">${language==='bn'?'বিস্তারিত পড়ুন':'Read details'}</button>`;c.querySelector('button').onclick=()=>openEntry(e);$('home').appendChild(c)});
+}
+function openEntry(e){openDetail(`<article class="card"><h2>${language==='bn'?e.title:e.en||e.title}</h2>${e.ar?`<div class="label">আরবি / Arabic</div><div class="arabic">${e.ar}</div>`:''}${e.pron?`<div class="label">বাংলা উচ্চারণ</div><p>${e.pron}</p>`:''}${e.meaning?`<div class="label">${language==='bn'?'বাংলা অর্থ / বিবরণ':'Meaning / Explanation'}</div><p class="meaning">${e.meaning}</p>`:''}${e.source?`<div class="label">তথ্যসূত্র / Source</div><p>${e.source}</p>`:''}${e.extra?`<div class="notice">${e.extra}</div>`:''}<button class="action" onclick="speakText(${JSON.stringify(e.pron||e.meaning||e.title).replace(/</g,'\\u003c')})">🔊 ${language==='bn'?'উচ্চারণ শুনুন':'Listen'}</button></article>`)}
+function renderPrayerHome(q=''){
+ let data=prayerSteps.filter(x=>!q||(x.join(' ').toLowerCase().includes(q)));
+ let html=`<div class="card"><h2>হানাফি পদ্ধতিতে নামাজ শিক্ষা</h2><p>নিচে নামাজের সাধারণ ধারাবাহিকতা দেওয়া হলো। প্রতিটি রুকনে তুমানিনা বজায় রাখুন এবং শুদ্ধ কিরাত অভিজ্ঞ শিক্ষকের কাছে শিখুন।</p><div class="notice">এটি সংক্ষিপ্ত পরিচিতি, পূর্ণ ফতোয়া বা সব পরিস্থিতির বিকল্প নয়। নারী-পুরুষের কিছু আমল ও বিভিন্ন অবস্থার বিধান নিয়ে ফিকহি আলোচনা আছে।</div></div>`;
+ data.forEach(s=>html+=`<div class="card step"><h3>${s[0]}</h3><p>${s[1]}</p><p class="muted">${s[2]}</p></div>`);
+ topics.forEach(t=>{if(!q||(t.title+t.text).toLowerCase().includes(q))html+=`<div class="card"><h3>${t.title}</h3><p>${t.text}</p></div>`});
+ $('home').innerHTML=html;
+}
+async function renderQuranHome(q=''){
+ $('home').innerHTML='<div class="card"><p>১১৪টি সূরার তালিকা লোড হচ্ছে…</p></div>';
+ try{
+  if(!surahs.length){let r=await fetch(API+'/surah');if(!r.ok)throw Error('সূরার তালিকা আনা যায়নি');let j=await r.json();surahs=j.data||[]}
+  $('home').innerHTML='';
+  let list=surahs.filter(s=>!q||(`${s.number} ${s.name} ${s.englishName} ${s.englishNameTranslation}`).toLowerCase().includes(q));
+  list.forEach(s=>{let b=document.createElement('button');b.className='surah';b.innerHTML=`<span><strong>${s.number}. ${s.englishName}</strong><br><span class="small">${s.englishNameTranslation} • ${s.numberOfAyahs} আয়াত • ${s.revelationType==='Meccan'?'মাক্কী':'মাদানী'}</span></span><span class="arabic" style="font-size:22px">${s.name}</span>`;b.onclick=()=>loadSurah(s.number);$('home').appendChild(b)});
+ }catch(err){$('home').innerHTML=`<div class="card"><h3>কুরআনের তথ্য এখন লোড হচ্ছে না</h3><p>${err.message}</p><p>ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</p><button class="action" onclick="renderQuranHome()">আবার চেষ্টা করুন</button></div>`}
+}
+async function loadSurah(n){
+ openDetail('<div class="card"><p>সূরার আরবি পাঠ, বাংলা অনুবাদ ও তিলাওয়াত লোড হচ্ছে…</p></div>');
+ try{
+  const [ar,bn,aud]=await Promise.all([
+   fetch(`${API}/surah/${n}/quran-uthmani`).then(r=>{if(!r.ok)throw Error('Arabic text unavailable');return r.json()}),
+   fetch(`${API}/surah/${n}/bn.bengali`).then(r=>{if(!r.ok)throw Error('Bengali translation unavailable');return r.json()}),
+   fetch(`${API}/surah/${n}/ar.alafasy`).then(r=>{if(!r.ok)throw Error('Audio metadata unavailable');return r.json()})
+  ]);
+  const A=ar.data,B=bn.data,U=aud.data;
+  let out=`<article class="card"><h2>${A.number}. ${A.englishName} — ${A.name}</h2><p>${A.englishNameTranslation} • ${A.numberOfAyahs} আয়াত • ${A.revelationType==='Meccan'?'মাক্কী':'মাদানী'}</p><div class="notice">আরবি পাঠ: Uthmani script। বাংলা অর্থ: ${B.edition.name||'বাংলা অনুবাদ'}। অনুবাদ মূল আরবি কুরআনের বিকল্প নয়।</div><h3>সম্পূর্ণ সূরা তিলাওয়াত</h3><button class="action" id="playSurah">▶ সম্পূর্ণ সূরা শুনুন</button><audio id="surahPlayer" controls preload="none"></audio><p class="small">সম্পূর্ণ সূরা শুনুন বাটনে চাপলে আয়াতগুলো ধারাবাহিকভাবে বাজবে। আলাদা আয়াতের প্লেয়ারও ব্যবহার করতে পারবেন।</p></article><article class="card">`;
+  for(let i=0;i<A.ayahs.length;i++){
+   const x=A.ayahs[i], y=B.ayahs[i], z=U.ayahs[i];
+   out+=`<div class="ayah"><div class="row"><span><b>${A.number}:${x.numberInSurah}</b></span><span class="small">${x.juz?`জুজ ${x.juz}`:''}</span></div><div class="arabic">${x.text}</div><div class="label">বাংলা অনুবাদ</div><p class="meaning">${y?.text||'অনুবাদ পাওয়া যায়নি'}</p><audio controls preload="none" src="${z?.audio||''}"></audio></div>`;
+  }
+  out+='</article>';openDetail(out);
+  surahPlaylist=U.ayahs.map(v=>v.audio).filter(Boolean);playlistIndex=0;
+  const player=$('surahPlayer');
+  $('playSurah').onclick=()=>{if(!surahPlaylist.length)return;playlistIndex=0;player.src=surahPlaylist[playlistIndex];player.play().catch(()=>{});};
+  player.onended=()=>{playlistIndex++;if(playlistIndex<surahPlaylist.length){player.src=surahPlaylist[playlistIndex];player.play().catch(()=>{});}};
+ }catch(err){openDetail(`<div class="card"><h3>সূরা লোড করা যায়নি</h3><p>${err.message}</p><button class="action" onclick="loadSurah(${n})">আবার চেষ্টা করুন</button></div>`)}
+}
+function speakText(t){if('speechSynthesis'in window){let u=new SpeechSynthesisUtterance(t);u.lang='bn-BD';speechSynthesis.speak(u)}else alert('এই ডিভাইসে টেক্সট-টু-স্পিচ নেই।')}
+function setLanguage(){language=language==='bn'?'en':'bn';$('lang').textContent=language==='bn'?'English':'বাংলা';$('tagline').textContent=language==='bn'?'দৈনন্দিন দোয়া • হানাফি নামাজ শিক্ষা • সম্পূর্ণ কুরআন • ইসলামের মৌলিক জ্ঞান':'Daily Duas • Hanafi Prayer Guide • Complete Quran • Islamic Knowledge';$('search').placeholder=language==='bn'?'দোয়া, সূরা বা বিষয় খুঁজুন…':'Search duas, surahs or topics…';$('clear').textContent=language==='bn'?'মুছুন':'Clear';$('back').textContent=language==='bn'?'← সব বিভাগ':'← All sections';initTabs();renderHome()}
+$('lang').onclick=setLanguage;$('back').onclick=showHome;$('clear').onclick=()=>{$('search').value='';renderHome()};$('search').addEventListener('input',()=>renderHome());
+initTabs();renderHome();
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>

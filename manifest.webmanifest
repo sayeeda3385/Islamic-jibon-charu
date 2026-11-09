@@ -1,0 +1,9 @@
+{
+  "name": "ইসলামিক জীবন — চারু",
+  "short_name": "ইসলামিক জীবন",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f7f4",
+  "theme_color": "#0b3b32",
+  "lang": "bn"
+}
