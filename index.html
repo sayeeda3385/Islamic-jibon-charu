@@ -136,4 +136,4 @@ function setLanguage(){language=language==='bn'?'en':'bn';$('lang').textContent=
 $('lang').onclick=setLanguage;$('back').onclick=showHome;$('clear').onclick=()=>{$('search').value='';renderHome()};$('search').addEventListener('input',()=>renderHome());
 initTabs();renderHome();
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
-</script></body></html>
+</script><script src="./content.js"></script></body></html>
