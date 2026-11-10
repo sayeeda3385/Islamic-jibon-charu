@@ -1,0 +1,46 @@
+name: Validate development app
+
+on:
+  push:
+    branches:
+      - feature/islamic-library-expansion
+  pull_request:
+    branches:
+      - feature/islamic-library-expansion
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out development branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check content script syntax
+        run: node --check content.js
+      - name: Check inline app script syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.S)
+          if not scripts:
+              raise SystemExit("No inline application script found")
+          Path("/tmp/app-inline.js").write_text("\n".join(scripts), encoding="utf-8")
+          if 'src="./content.js"' not in html:
+              raise SystemExit("content.js is not linked from index.html")
+          PY
+          node --check /tmp/app-inline.js
+      - name: Check required app files
+        run: |
+          test -f index.html
+          test -f content.js
+          test -f manifest.webmanifest
+          test -f sw.js
