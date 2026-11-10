@@ -1,5 +1,5 @@
-const CACHE='islamic-jibon-charu-v3';
-const SHELL=['./','./index.html','./manifest.webmanifest','./content.js'];
+const CACHE='islamic-jibon-charu-v4';
+const SHELL=['./','./index.html','./manifest.webmanifest'];
 self.addEventListener('install',event=>event.waitUntil(
  caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())
 ));
@@ -10,14 +10,13 @@ self.addEventListener('fetch',event=>{
  const request=event.request;
  if(request.method!=='GET')return;
  const url=new URL(request.url);
- // Third-party Quran/API/audio resources are deliberately not cached here.
- // Quran Foundation content must follow its approved Content Sync terms.
+ // Do not cache third-party Quran, Hadith API or audio data here.
  if(url.origin!==self.location.origin)return;
  event.respondWith((async()=>{
   const cache=await caches.open(CACHE);
   try{
    const response=await fetch(request);
-   if(response.ok && (request.destination==='document'||['script','style','manifest'].includes(request.destination)||SHELL.includes(url.pathname)||url.pathname.endsWith('/content.js'))){
+   if(response.ok && (request.destination==='document'||['script','style','manifest'].includes(request.destination)||SHELL.includes(url.pathname))){
     await cache.put(request,response.clone());
    }
    return response;
