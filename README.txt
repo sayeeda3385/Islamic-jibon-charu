@@ -28,3 +28,5 @@
 প্রকাশনা:
 - এই শাখা development preview-এর জন্য; main branch বা live GitHub Pages-এ প্রকাশ করা হয়নি।
 - বাস্তব Android/iOS browser পরীক্ষা ও scholar review ছাড়া release-ready বলা যাবে না।
+
+শেষ যাচাই: automated workflow now checks the restored single-file app structure and required entry points.
