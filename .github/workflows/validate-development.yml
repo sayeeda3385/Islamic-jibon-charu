@@ -34,6 +34,10 @@ jobs:
           Path("/tmp/app-inline.js").write_text("\\n".join(scripts), encoding="utf-8")
           PY
           node --check /tmp/app-inline.js
+      - name: Check external data script syntax
+        run: |
+          test -f prophets-data.js
+          node --check prophets-data.js
       - name: Check required app files
         run: |
           test -f index.html
@@ -42,3 +46,4 @@ jobs:
           grep -q 'function renderPage' index.html
           grep -q 'function quranView' index.html
           grep -q 'function hadithView' index.html
+          grep -q 'prophets-data.js' index.html
