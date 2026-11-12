@@ -66,10 +66,12 @@
 
 
 ## Expanded Islamic reference curriculum
-- The 20-volume subject map now has 100 original lesson entries (60 introductory + 40 supplemental lessons), with practical steps, selected Arabic text, Quran/hadith references and cautions where relevant.
+- The 20-volume subject map now has 120 original lesson entries (60 introductory + 60 supplemental lessons), with practical steps, selected Arabic text, Quran/hadith references and cautions where relevant.
 - The app's curriculum renderer displays practical guidance, Arabic text and caution notes separately. Search covers the expanded lesson content; saved lessons remain available locally.
 - The source/about page documents the bibliographic record for *Maksudul Mominin*, Quran text attribution and license, hadith numbering caveats, Hanafi fiqh study references and Bangladesh's Islamic Foundation library.
 - This remains a growing educational reference, not a complete transcription of every topic in every edition, not a fatwa service and not yet scholar-reviewed. Hadith references require edition-aware checking; no unverified grading should be inferred.
 - Quran text and translations must follow their individual source and reuse terms. Tanzil's Quran text is not to be modified and requires attribution and a source link. Sunnah.com prohibits scraping and mass reproduction; only permitted selected quotations and API use should be considered.
 
 - Quran reader attribution: the current reader calls AlQuran Cloud; its terms identify the Arabic text's curation sources and require faithful display, while translation and recitation rights remain tied to their individual editions/rights-holders. The Quran reader now links to these terms at the point of use.
+
+- A second expansion added volume-specific chapters on the five pillars, tawhid, istinja, Jumu'ah, prayer times and qada, Eid, weekly voluntary worship, fasting exemptions and expiation, Hajj day sequence, zakat nisab, family rights, menstruation/postpartum rulings, child care, social rights, afterlife, dua etiquette, Surah al-Fatihah, salawat verification and annual voluntary fasts.
