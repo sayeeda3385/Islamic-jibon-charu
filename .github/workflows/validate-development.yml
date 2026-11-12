@@ -51,4 +51,5 @@ jobs:
           grep -q 'data-save-id' index.html
           grep -q 'Promise.allSettled' index.html
           grep -q "'quran-'+n+'-'+x.numberInSurah" index.html
+          grep -q "\$('dialogBody').addEventListener" index.html
           grep -q "current==='saved'" index.html
