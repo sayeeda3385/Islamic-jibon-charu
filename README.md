@@ -42,3 +42,11 @@
 - Expanded topic lessons have been added for Hanafi prayer and purification, Aqeedah, Islamic history, Hajj and Umrah, fasting and zakat, janazah, and the Kaaba.
 - Prophet biography text is included in local global search. The biographies are Quran-grounded learning summaries, not substitutes for full seerah works or scholarly research.
 - These additions are educational drafts. Detailed fiqh rulings and historical claims should be checked against recognized primary sources and qualified scholarship before being treated as fatwas or academic editions.
+
+
+## Expanded learning content (development branch)
+
+- The prophets section now has separate Bengali and English narrative biographies for all 25 prophets named in the Quran, with Quran references, practical lessons and explicit notes where reliable primary sources do not provide a full chronology.
+- The Aqeedah, Hanafi prayer, fasting, janazah and Islamic history sections include additional topic lessons with Bengali and English explanations.
+- These additions are educational summaries, not personal fatwas. Detailed legal cases should be checked with qualified scholars. Historical claims are kept distinct from Quranic statements, and uncertain reports are not presented as established fact.
+- Prophet biography data is maintained in `prophets-detail.js` and loaded by the app; the service worker shell cache is versioned to include it.
