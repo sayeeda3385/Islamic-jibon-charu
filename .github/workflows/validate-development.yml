@@ -53,3 +53,7 @@ jobs:
           grep -q "'quran-'+n+'-'+x.numberInSurah" index.html
           grep -q "\$('dialogBody').addEventListener" index.html
           grep -q "current==='saved'" index.html
+          grep -q 'window.ISLAMIC_PROPHETS' index.html
+          grep -q "'prophet-'+i" index.html
+          grep -q 'function globalSearch' index.html
+
