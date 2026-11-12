@@ -45,6 +45,9 @@ jobs:
           test -f sw.js
           grep -q 'function renderPage' index.html
           grep -q 'function quranView' index.html
+          grep -q 'async function loadJuz' index.html
+          grep -q '/juz/' index.html
+          grep -q 'openJuz' index.html
           grep -q 'function hadithView' index.html
           grep -q 'prophets-data.js' index.html
           grep -q 'function savedView' index.html
