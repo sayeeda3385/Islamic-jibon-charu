@@ -47,7 +47,7 @@ jobs:
           if rows != 25:
               raise SystemExit(f'Expected detailed biographies for 25 prophets, found {rows}')
           html = Path('index.html').read_text(encoding='utf-8')
-          for section in ('sections.aqeedah.items.push','sections.prayer.items.push','sections.history.items.push','sections.fasting.items.push','sections.janazah.items.push'):
+          for section in ('const prayerPurityDetailed=','sections.prayer.items.push(...prayerPurityDetailed)','sections.aqeedah.items.push','sections.prayer.items.push','sections.history.items.push','sections.fasting.items.push','sections.janazah.items.push'):
               if section not in html:
                   raise SystemExit(f'Missing expanded learning section: {section}')
           PY
@@ -76,4 +76,8 @@ jobs:
           grep -q 'window.ISLAMIC_PROPHETS' index.html
           grep -q "'prophet-'+i" index.html
           grep -q 'function globalSearch' index.html
+          grep -q 'const prayerPurityDetailed=' index.html
+          grep -q 'sections.prayer.items.push(...prayerPurityDetailed)' index.html
+          grep -q 'সাহু সিজদা: কখন ও কীভাবে' index.html
+          grep -q 'অজুর সুন্নত, মুস্তাহাব ও পূর্ণ পদ্ধতি' index.html
 
