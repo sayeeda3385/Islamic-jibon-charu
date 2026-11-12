@@ -71,7 +71,7 @@ jobs:
           grep -q 'function prayerView()' index.html
           grep -q 'দুই রাকাত নামাজ' index.html
           grep -q 'দোয়া কুনুত' index.html
-          grep -q 'সাত দিনের অনুশীলন' index.html
+          grep -q '৭ দিনের অনুশীলন' index.html
           grep -q 'Read the detailed biography' index.html
           grep -q 'window.ISLAMIC_PROPHET_DETAILS' prophets-detail.js
           grep -q 'function savedView' index.html
