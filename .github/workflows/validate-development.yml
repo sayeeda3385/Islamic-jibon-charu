@@ -80,8 +80,8 @@ jobs:
           from pathlib import Path
           import re
           html = Path("index.html").read_text(encoding="utf-8")
-          block = html.split("const prayerLearningChapters=[", 1)[1].split("\\n];\\nfunction prayerView()", 1)[0]
-          chapters = re.findall(r"\\{h:\\[", block)
+          block = html.split("const prayerLearningChapters=[", 1)[1].split("\n];\nfunction prayerView()", 1)[0]
+          chapters = re.findall(r"\{h:\[", block)
           if len(chapters) < 14:
               raise SystemExit(f"Expected at least 14 prayer chapters, found {len(chapters)}")
           if "ch.refs" not in html:
