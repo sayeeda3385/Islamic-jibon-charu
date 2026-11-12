@@ -50,3 +50,9 @@
 - The Aqeedah, Hanafi prayer, fasting, janazah and Islamic history sections include additional topic lessons with Bengali and English explanations.
 - These additions are educational summaries, not personal fatwas. Detailed legal cases should be checked with qualified scholars. Historical claims are kept distinct from Quranic statements, and uncertain reports are not presented as established fact.
 - Prophet biography data is maintained in `prophets-detail.js` and loaded by the app; the service worker shell cache is versioned to include it.
+
+
+## Textbook-style study structure (development branch)
+- Prayer and purification now contains 15 chapters with bilingual lessons covering purification foundations, water and impurity, istinja, wiping concessions, menstruation/postpartum bleeding/istihada, prayer conditions and classifications, prayer times and make-up prayers, sajdah sahw, congregation and late joining, voluntary prayers, travel and emergencies.
+- The study sequence is informed by the chapter subjects of *Maksudul Mominin / Mokchudul Mominin* (Taharah, Salah, prayer intentions, recitations, sajdah sahw and voluntary prayers). Edition, author attribution, volume numbering and pagination vary among compilations; page numbers are not claimed without verifying a specific printed edition. A digitized copy's Arabic proofreading warning is disclosed in-app.
+- Other topic sections use a consistent chapter/lesson presentation with numbered lesson headings. This is an original educational organization, not a reproduction of the book's text. Quran and reliable hadith remain primary evidence; Hanafi fiqh summaries require qualified review.
