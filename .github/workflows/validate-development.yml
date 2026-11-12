@@ -38,6 +38,8 @@ jobs:
         run: |
           test -f prophets-data.js
           node --check prophets-data.js
+          test -f prophets-detail.js
+          node --check prophets-detail.js
       - name: Check required app files
         run: |
           test -f index.html
@@ -50,6 +52,10 @@ jobs:
           grep -q 'openJuz' index.html
           grep -q 'function hadithView' index.html
           grep -q 'prophets-data.js' index.html
+          grep -q 'prophets-detail.js' index.html
+          grep -q 'function prophetsView' index.html
+          grep -q 'Read the detailed biography' index.html
+          grep -q 'window.ISLAMIC_PROPHET_DETAILS' prophets-detail.js
           grep -q 'function savedView' index.html
           grep -q 'data-save-id' index.html
           grep -q 'Promise.allSettled' index.html
