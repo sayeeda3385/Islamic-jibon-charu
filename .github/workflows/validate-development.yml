@@ -47,3 +47,6 @@ jobs:
           grep -q 'function quranView' index.html
           grep -q 'function hadithView' index.html
           grep -q 'prophets-data.js' index.html
+          grep -q 'function savedView' index.html
+          grep -q 'data-save-id' index.html
+          grep -q "current==='saved'" index.html
