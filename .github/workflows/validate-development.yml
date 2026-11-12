@@ -49,6 +49,8 @@ jobs:
           test "$(grep -o '"lessons":' maksudul-curriculum-detail.js | wc -l)" -eq 20
           grep -q 'Tanzil text license' index.html
           grep -q 'Hadith numbering and grading' index.html
+          grep -q 'AlQuran Cloud' index.html
+          grep -q 'sunnah.com/about' index.html
           node - <<'NODE'
           global.window = global;
           require('./maksudul-curriculum.js');
