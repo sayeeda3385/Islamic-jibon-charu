@@ -6,7 +6,7 @@
 - বাংলা / English ইন্টারফেস
 - আল-কুরআনের ১১৪ সূরার তালিকা এবং ৩০ পারার পাঠক; আরবি পাঠ, বাংলা ও English অনুবাদ, আয়াতভিত্তিক আল-আফাসি অডিও ও বুকমার্ক (ইন্টারনেট-নির্ভর)
 - নির্বাচিত হাদিস সংকলনের অনলাইন পাঠক; উপলভ্য ডেটা ও অনুবাদ সংস্করণভেদে ভিন্ন হতে পারে
-- দৈনন্দিন দোয়া, যিকির, নামাজ ও পবিত্রতা বিষয়ক প্রাথমিক নির্দেশিকা
+- দৈনন্দিন দোয়া ও যিকির; হানাফি পদ্ধতিতে নামাজ ও পবিত্রতার বিস্তৃত বাংলা/English পাঠ (অজু, গোসল, তায়াম্মুম, হায়েজ-নিফাস, নামাজের শর্ত-ফরজ-ওয়াজিব, ধাপে ধাপে আদায়, বিতর, জামাত, সাহু সিজদা, কাজা, সফর, অসুস্থতা, জুমা, ঈদ ও যিকির)।
 - কুরআনে নামোল্লেখিত ২৫ জন নবীর সংক্ষিপ্ত পরিচিতি ও কুরআনিক সূত্র
 - হজ ও ওমরাহর ১৭ বিষয়ের শিক্ষামূলক নির্দেশিকা
 - কুরআনের আয়াত, দোয়া, বিষয়ভিত্তিক পাঠ ও নবীদের পরিচিতির বুকমার্ক/সংরক্ষণ (একই ডিভাইস ও ব্রাউজারে)
@@ -41,7 +41,7 @@
 - The prophets section includes detailed Bengali and English narrative summaries for all 25 prophets named in the Quran, with Quran references, lessons and explicit cautions where reliable chronological details are not available.
 - Expanded topic lessons have been added for Hanafi prayer and purification, Aqeedah, Islamic history, Hajj and Umrah, fasting and zakat, janazah, and the Kaaba.
 - Prophet biography text is included in local global search. The biographies are Quran-grounded learning summaries, not substitutes for full seerah works or scholarly research.
-- These additions are educational drafts. Detailed fiqh rulings and historical claims should be checked against recognized primary sources and qualified scholarship before being treated as fatwas or academic editions.
+- The prayer and purification section has been expanded with detailed Bengali and English lessons on cleanliness, istinja, wudu, invalidators, wiping, ghusl, tayammum, menstruation/nifas/istihada, prayer conditions and pillars, wajibat/sunnahs, step-by-step prayer, recitation, postures, Witr, congregation, sajdah sahw, missed prayers, travel, illness, Friday/Eid prayers and post-prayer remembrance. These are educational summaries, not a scholar-reviewed fatwa manual; case-specific rulings require qualified Hanafi review.
 
 
 ## Expanded learning content (development branch)
