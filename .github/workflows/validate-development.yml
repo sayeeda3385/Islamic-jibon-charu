@@ -40,6 +40,17 @@ jobs:
           node --check prophets-data.js
           test -f prophets-detail.js
           node --check prophets-detail.js
+          python3 - <<'PY'
+          from pathlib import Path
+          data = Path('prophets-detail.js').read_text(encoding='utf-8')
+          rows = sum(1 for line in data.splitlines() if line.startswith('[\"'))
+          if rows != 25:
+              raise SystemExit(f'Expected detailed biographies for 25 prophets, found {rows}')
+          html = Path('index.html').read_text(encoding='utf-8')
+          for section in ('sections.aqeedah.items.push','sections.prayer.items.push','sections.history.items.push','sections.fasting.items.push','sections.janazah.items.push'):
+              if section not in html:
+                  raise SystemExit(f'Missing expanded learning section: {section}')
+          PY
       - name: Check required app files
         run: |
           test -f index.html
