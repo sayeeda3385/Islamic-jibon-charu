@@ -63,3 +63,11 @@
 - The initial curriculum contains 60 original bilingual study lessons (three per volume), each with a concise explanation and Quran/hadith study references. This is a structured first edition, not a claim that every discussion or ruling in all print editions has been transcribed or completed.
 - The book's online archive explicitly notes that its Arabic text has not been proofread. Therefore the app does not treat that transcription as an authoritative Arabic source. Verify Arabic against reliable Quran/hadith editions and have fiqh rulings reviewed by qualified scholars.
 - The curriculum is independently written and summarized; it does not reproduce the book verbatim. Edition-specific page numbers are omitted until a specific printed edition is checked.
+
+
+## Expanded Islamic reference curriculum
+- The 20-volume subject map now has 100 original lesson entries (60 introductory + 40 supplemental lessons), with practical steps, selected Arabic text, Quran/hadith references and cautions where relevant.
+- The app's curriculum renderer displays practical guidance, Arabic text and caution notes separately. Search covers the expanded lesson content; saved lessons remain available locally.
+- The source/about page documents the bibliographic record for *Maksudul Mominin*, Quran text attribution and license, hadith numbering caveats, Hanafi fiqh study references and Bangladesh's Islamic Foundation library.
+- This remains a growing educational reference, not a complete transcription of every topic in every edition, not a fatwa service and not yet scholar-reviewed. Hadith references require edition-aware checking; no unverified grading should be inferred.
+- Quran text and translations must follow their individual source and reuse terms. Tanzil's Quran text is not to be modified and requires attribution and a source link. Sunnah.com prohibits scraping and mass reproduction; only permitted selected quotations and API use should be considered.
