@@ -1,5 +1,5 @@
-const CACHE='islamic-jibon-charu-v8';
-const SHELL=['./','./index.html','./manifest.webmanifest','./prophets-data.js'];
+const CACHE='islamic-jibon-charu-v9';
+const SHELL=['./','./index.html','./manifest.webmanifest','./prophets-data.js','./prophets-detail.js'];
 self.addEventListener('install',event=>event.waitUntil(
  caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())
 ));
