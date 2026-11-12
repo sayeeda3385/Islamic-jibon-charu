@@ -45,6 +45,7 @@ jobs:
           test -f maksudul-curriculum-detail.js
           node --check maksudul-curriculum-detail.js
           grep -q 'MAKSUDUL_CURRICULUM_EXPANSION' maksudul-curriculum-detail.js
+          grep -q 'MAKSUDUL_CURRICULUM_EXPANSION_2' maksudul-curriculum-detail.js
           test "$(grep -o '"n":' maksudul-curriculum-detail.js | wc -l)" -eq 20
           test "$(grep -o '"lessons":' maksudul-curriculum-detail.js | wc -l)" -eq 20
           grep -q 'Tanzil text license' index.html
@@ -57,8 +58,8 @@ jobs:
           require('./maksudul-curriculum-detail.js');
           const volumes = window.MAKSUDUL_CURRICULUM;
           const count = volumes.reduce((sum, volume) => sum + volume.lessons.length, 0);
-          if (volumes.length !== 20 || count !== 100) {
-            throw new Error(`Expected 20 volumes and 100 lessons; got ${volumes.length} volumes and ${count} lessons`);
+          if (volumes.length !== 20 || count !== 120) {
+            throw new Error(`Expected 20 volumes and 120 lessons; got ${volumes.length} volumes and ${count} lessons`);
           }
           if (volumes.some(volume => volume.lessons.some(lesson => !lesson[0] || !lesson[1] || !lesson[2]))) {
             throw new Error('A curriculum lesson is missing its title, explanation or reference');
