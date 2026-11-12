@@ -49,6 +49,20 @@ jobs:
           test "$(grep -o '"lessons":' maksudul-curriculum-detail.js | wc -l)" -eq 20
           grep -q 'Tanzil text license' index.html
           grep -q 'Hadith numbering and grading' index.html
+          node - <<'NODE'
+          global.window = global;
+          require('./maksudul-curriculum.js');
+          require('./maksudul-curriculum-detail.js');
+          const volumes = window.MAKSUDUL_CURRICULUM;
+          const count = volumes.reduce((sum, volume) => sum + volume.lessons.length, 0);
+          if (volumes.length !== 20 || count !== 100) {
+            throw new Error(`Expected 20 volumes and 100 lessons; got ${volumes.length} volumes and ${count} lessons`);
+          }
+          if (volumes.some(volume => volume.lessons.some(lesson => !lesson[0] || !lesson[1] || !lesson[2]))) {
+            throw new Error('A curriculum lesson is missing its title, explanation or reference');
+          }
+          console.log(`Validated ${volumes.length} volumes and ${count} lessons`);
+          NODE
           grep -q 'window.MAKSUDUL_CURRICULUM' maksudul-curriculum.js
           test "$(grep -c '^{n:' maksudul-curriculum.js)" -eq 20
           python3 - <<'PY'
