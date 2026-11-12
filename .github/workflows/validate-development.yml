@@ -49,4 +49,6 @@ jobs:
           grep -q 'prophets-data.js' index.html
           grep -q 'function savedView' index.html
           grep -q 'data-save-id' index.html
+          grep -q 'Promise.allSettled' index.html
+          grep -q "'quran-'+n+'-'+x.numberInSurah" index.html
           grep -q "current==='saved'" index.html
