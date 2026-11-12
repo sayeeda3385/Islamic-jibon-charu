@@ -71,3 +71,5 @@
 - The source/about page documents the bibliographic record for *Maksudul Mominin*, Quran text attribution and license, hadith numbering caveats, Hanafi fiqh study references and Bangladesh's Islamic Foundation library.
 - This remains a growing educational reference, not a complete transcription of every topic in every edition, not a fatwa service and not yet scholar-reviewed. Hadith references require edition-aware checking; no unverified grading should be inferred.
 - Quran text and translations must follow their individual source and reuse terms. Tanzil's Quran text is not to be modified and requires attribution and a source link. Sunnah.com prohibits scraping and mass reproduction; only permitted selected quotations and API use should be considered.
+
+- Quran reader attribution: the current reader calls AlQuran Cloud; its terms identify the Arabic text's curation sources and require faithful display, while translation and recitation rights remain tied to their individual editions/rights-holders. The Quran reader now links to these terms at the point of use.
