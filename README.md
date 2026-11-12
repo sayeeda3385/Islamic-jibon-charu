@@ -35,3 +35,10 @@
 
 ## License and attribution
 প্রতিটি তৃতীয় পক্ষের অনুবাদ, তাফসির, অডিও ও ডেটাসেটের নিজস্ব লাইসেন্স ও attribution শর্ত মানতে হবে। এই README কোনো তৃতীয় পক্ষের ডেটার মালিকানা দাবি করে না।
+
+
+## Expanded study content (development branch)
+- The prophets section includes detailed Bengali and English narrative summaries for all 25 prophets named in the Quran, with Quran references, lessons and explicit cautions where reliable chronological details are not available.
+- Expanded topic lessons have been added for Hanafi prayer and purification, Aqeedah, Islamic history, Hajj and Umrah, fasting and zakat, janazah, and the Kaaba.
+- Prophet biography text is included in local global search. The biographies are Quran-grounded learning summaries, not substitutes for full seerah works or scholarly research.
+- These additions are educational drafts. Detailed fiqh rulings and historical claims should be checked against recognized primary sources and qualified scholarship before being treated as fatwas or academic editions.
