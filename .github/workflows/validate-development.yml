@@ -46,8 +46,8 @@ jobs:
           node --check maksudul-curriculum-detail.js
           grep -q 'MAKSUDUL_CURRICULUM_EXPANSION' maksudul-curriculum-detail.js
           grep -q 'MAKSUDUL_CURRICULUM_EXPANSION_2' maksudul-curriculum-detail.js
-          test "$(grep -o '"n":' maksudul-curriculum-detail.js | wc -l)" -eq 20
-          test "$(grep -o '"lessons":' maksudul-curriculum-detail.js | wc -l)" -eq 20
+          test "$(grep -o '"n":' maksudul-curriculum-detail.js | wc -l)" -eq 40
+          test "$(grep -o '"lessons":' maksudul-curriculum-detail.js | wc -l)" -eq 40
           grep -q 'Tanzil text license' index.html
           grep -q 'Hadith numbering and grading' index.html
           grep -q 'AlQuran Cloud' index.html
