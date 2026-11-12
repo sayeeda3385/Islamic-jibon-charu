@@ -40,6 +40,10 @@ jobs:
           node --check prophets-data.js
           test -f prophets-detail.js
           node --check prophets-detail.js
+          test -f maksudul-curriculum.js
+          node --check maksudul-curriculum.js
+          grep -q 'window.MAKSUDUL_CURRICULUM' maksudul-curriculum.js
+          test "$(grep -c '^{n:' maksudul-curriculum.js)" -eq 20
           python3 - <<'PY'
           from pathlib import Path
           data = Path('prophets-detail.js').read_text(encoding='utf-8')
@@ -64,6 +68,10 @@ jobs:
           grep -q 'function hadithView' index.html
           grep -q 'prophets-data.js' index.html
           grep -q 'prophets-detail.js' index.html
+          grep -q 'maksudul-curriculum.js' index.html
+          grep -q 'function maksudView' index.html
+          grep -q "current==='maksud'" index.html
+          grep -q 'মকসুদুল মোমিনিন পাঠক্রম' index.html
           grep -q 'function prophetsView' index.html
           grep -q 'function prayerView' index.html
           grep -q 'const prayerCoreReadings=' index.html
