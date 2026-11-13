@@ -130,6 +130,6 @@ jobs:
           grep -q 'function globalSearch' index.html
           grep -q 'const prayerPurityDetailed=' index.html
           grep -q 'sections.prayer.items.push(...prayerPurityDetailed)' index.html
-          grep -q 'সাহু সিজদা: কখন ও কীভাবে' index.html
-          grep -q 'অজুর সুন্নত, মুস্তাহাব ও পূর্ণ পদ্ধতি' index.html
+          grep -Fq 'সাহু সিজদা: কখন ও কীভাবে' index.html
+          grep -Fq 'অজুর সুন্নত, মুস্তাহাব ও পূর্ণ পদ্ধতি' index.html
 
