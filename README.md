@@ -37,6 +37,11 @@
 প্রতিটি তৃতীয় পক্ষের অনুবাদ, তাফসির, অডিও ও ডেটাসেটের নিজস্ব লাইসেন্স ও attribution শর্ত মানতে হবে। এই README কোনো তৃতীয় পক্ষের ডেটার মালিকানা দাবি করে না।
 
 
+## Subject-based integration
+- The 20-volume study material is distributed across the app's relevant subject pages; there is no standalone menu or home tile named after the source book.
+- The mapped curriculum contains 120 original Bengali lessons with source references and supplementary practical guidance. Subject pages include faith and creed, purification and prayer, essential recitations, fasting and zakat, Hajj, family life, social responsibilities, the Hereafter, dhikr, salawat and voluntary worship.
+- These are educational summaries, not a verbatim reproduction or a claim to reproduce every edition. The newly integrated lesson text is Bengali; English translation and scholarly review remain follow-up work before a full bilingual public release.
+
 ## Expanded study content (development branch)
 - The prophets section includes detailed Bengali and English narrative summaries for all 25 prophets named in the Quran, with Quran references, lessons and explicit cautions where reliable chronological details are not available.
 - The Hanafi prayer and purification page now has a dedicated beginner pathway, daily rakah chart, step-by-step wudu/ghusl/tayammum lessons, practical two/three/four-rakah prayer sequences, Arabic prayer recitations with Bengali transliteration and meaning, Witr qunut, congregation, travel, illness, women's rulings, common mistakes and a seven-day learning plan. The other topic lessons cover Aqeedah, Islamic history, Hajj and Umrah, fasting and zakat, janazah, and the Kaaba.
