@@ -109,10 +109,12 @@ janazah:{title:['জানাজা, মৃত্যু ও দাফন','Funer
 (function integrateSubjectLessons(){
  const curriculum=window.MAKSUDUL_CURRICULUM||[];
  const extra=window.MAKSUDUL_CURRICULUM_EXPANSION||[];
+ window.MAKSUDUL_INTEGRATED_STARTS={};
  const pageFor={1:'aqeedah',2:'aqeedah',3:'prayer',4:'prayer',5:'prayer',6:'prayer',7:'prayer',8:'amal',9:'fasting',10:'hajj',11:'fasting',12:'family',13:'family',14:'family',15:'social',16:'akhirah',17:'amal',18:'amal',19:'amal',20:'amal'};
  const labels={aqeedah:'ঈমান ও আকিদা',prayer:'নামাজ ও পবিত্রতা',amal:'যিকির, দরুদ ও নফল আমল',fasting:'রোজা ও যাকাত',hajj:'হজ ও উমরাহ',family:'পারিবারিক জীবন ও বিবাহ',social:'সামাজিক জীবন ও মানুষের অধিকার',akhirah:'আখিরাত ও পরকাল'};
  curriculum.forEach(vol=>{
   const page=pageFor[vol.n],target=sections[page]; if(!target)return;
+  if(window.MAKSUDUL_INTEGRATED_STARTS[page]===undefined)window.MAKSUDUL_INTEGRATED_STARTS[page]=target.items.length;
   const supplemental=(extra.find(x=>x.n===vol.n)||{}).lessons||[];
   (vol.lessons||[]).forEach((lesson,i)=>{
    const title=lesson[0]||vol.bn,body=lesson[1]||'',refs=lesson[2]||'';
@@ -313,9 +315,11 @@ function head(title,desc=''){return `<div class="section-head"><div><h2>${title}
 function card(title,body,action=''){return `<article class="card"><h3>${title}</h3>${body}${action}</article>`}
 function appendIntegratedLessons(id){
  const d=sections[id]; if(!d||!d.items||!d.items.length)return;
+ const start=(window.MAKSUDUL_INTEGRATED_STARTS||{})[id]??0;
+ const lessons=d.items.slice(start); if(!lessons.length)return;
  const wrap=document.createElement('section');
  wrap.innerHTML=head(d.title[lang==='bn'?0:1],lang==='bn'?'বিষয়ভিত্তিক অতিরিক্ত পাঠ ও সূত্র':'Additional subject lessons and references')+
- '<div class="grid">'+d.items.map((it,i)=>card((lang==='bn'?'অতিরিক্ত পাঠ ':'Additional lesson ')+(i+1)+' — '+it[lang==='bn'?0:1],'<p>'+it[lang==='bn'?2:3]+'</p>'+saveButton('integrated-'+id+'-'+i,it[lang==='bn'?0:1],it[lang==='bn'?2:3],'',id))).join('')+'</div>';
+ '<div class="grid">'+lessons.map((it,i)=>card((lang==='bn'?'অতিরিক্ত পাঠ ':'Additional lesson ')+(i+1)+' — '+it[lang==='bn'?0:1],'<p>'+it[lang==='bn'?2:3]+'</p>'+saveButton('integrated-'+id+'-'+(start+i),it[lang==='bn'?0:1],it[lang==='bn'?2:3],'',id))).join('')+'</div>';
  $('view').appendChild(wrap);
 }
 function renderPage(){
