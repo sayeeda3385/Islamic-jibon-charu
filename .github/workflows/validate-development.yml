@@ -100,9 +100,9 @@ jobs:
           grep -q 'function integrateSubjectLessons' index.html
           grep -q 'const pageFor={1:' index.html
           grep -q 'appendIntegratedLessons' index.html
-          grep -q "['family'" index.html
-          grep -q "['social'" index.html
-          grep -q "['akhirah'" index.html
+          grep -Fq "['family'" index.html
+          grep -Fq "['social'" index.html
+          grep -Fq "['akhirah'" index.html
           grep -q 'function prophetsView' index.html
           grep -q 'function prayerView' index.html
           grep -q 'const prayerCoreReadings=' index.html
