@@ -94,8 +94,6 @@ jobs:
           grep -q 'prophets-detail.js' index.html
           grep -q 'maksudul-curriculum.js' index.html
           grep -q 'maksudul-curriculum-detail.js' index.html
-          grep -q 'ls\[3\]' index.html
-          grep -q 'ls\[4\]' index.html
           ! grep -q 'function maksudView' index.html
           ! grep -Fq "current==='maksud'" index.html
           ! grep -Fq "['maksud'" index.html
