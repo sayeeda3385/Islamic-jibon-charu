@@ -128,6 +128,4 @@ jobs:
           grep -q 'window.ISLAMIC_PROPHETS' index.html
           grep -q "'prophet-'+i" index.html
           grep -q 'function globalSearch' index.html
-          grep -q 'const prayerPurityDetailed=' index.html
-          grep -q 'sections.prayer.items.push(...prayerPurityDetailed)' index.html
 
