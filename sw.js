@@ -1,14 +1,33 @@
-const CACHE='islamic-jibon-charu-v2';
-const SHELL=['./','./index.html','./manifest.webmanifest'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('islamic-jibon-charu-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{
- const u=new URL(e.request.url);
- if(e.request.method!=='GET')return;
- if(u.origin===location.origin || u.hostname==='api.alquran.cloud' || u.hostname==='cdn.islamic.network'){
-  e.respondWith(caches.open(CACHE).then(async cache=>{
-   const cached=await cache.match(e.request);
-   try{const response=await fetch(e.request);if(response.ok && (u.origin===location.origin || u.hostname==='api.alquran.cloud'))cache.put(e.request,response.clone());return response}catch(err){if(cached)return cached;throw err}
-  }));
- }
+const CACHE='islamic-jibon-charu-v16';
+const SHELL=['./','./index.html','./manifest.webmanifest','./prophets-data.js','./prophets-detail.js','./maksudul-curriculum.js','./maksudul-curriculum-detail.js'];
+self.addEventListener('install',event=>event.waitUntil(
+ caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())
+));
+self.addEventListener('activate',event=>event.waitUntil(
+ caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('islamic-jibon-charu-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())
+));
+self.addEventListener('fetch',event=>{
+ const request=event.request;
+ if(request.method!=='GET')return;
+ const url=new URL(request.url);
+ // Do not cache third-party Quran, Hadith API or audio data here.
+ if(url.origin!==self.location.origin)return;
+ event.respondWith((async()=>{
+  const cache=await caches.open(CACHE);
+  try{
+   const response=await fetch(request);
+   if(response.ok && (request.destination==='document'||['script','style','manifest'].includes(request.destination)||SHELL.includes(url.pathname))){
+    await cache.put(request,response.clone());
+   }
+   return response;
+  }catch(error){
+   const cached=await cache.match(request);
+   if(cached)return cached;
+   if(request.mode==='navigate'){
+    const shell=await cache.match('./index.html');
+    if(shell)return shell;
+   }
+   throw error;
+  }
+ })());
 });

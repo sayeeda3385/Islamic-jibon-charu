@@ -1,0 +1,131 @@
+name: Validate development app
+
+on:
+  push:
+    branches:
+      - feature/islamic-library-expansion
+  pull_request:
+    branches:
+      - feature/islamic-library-expansion
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out development branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check inline app script syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.S)
+          if not scripts:
+              raise SystemExit("No inline application script found")
+          Path("/tmp/app-inline.js").write_text("\\n".join(scripts), encoding="utf-8")
+          PY
+          node --check /tmp/app-inline.js
+      - name: Check external data script syntax
+        run: |
+          test -f prophets-data.js
+          node --check prophets-data.js
+          test -f prophets-detail.js
+          node --check prophets-detail.js
+          test -f maksudul-curriculum.js
+          node --check maksudul-curriculum.js
+          test -f maksudul-curriculum-detail.js
+          node --check maksudul-curriculum-detail.js
+          grep -q 'MAKSUDUL_CURRICULUM_EXPANSION' maksudul-curriculum-detail.js
+          grep -q 'MAKSUDUL_CURRICULUM_EXPANSION_2' maksudul-curriculum-detail.js
+          test "$(grep -o '"n":' maksudul-curriculum-detail.js | wc -l)" -eq 40
+          test "$(grep -o '"lessons":' maksudul-curriculum-detail.js | wc -l)" -eq 40
+          grep -q 'Tanzil text license' index.html
+          grep -q 'Hadith numbering and grading' index.html
+          grep -q 'AlQuran Cloud' index.html
+          grep -q 'sunnah.com/about' index.html
+          node - <<'NODE'
+          global.window = global;
+          require('./maksudul-curriculum.js');
+          require('./maksudul-curriculum-detail.js');
+          const volumes = window.MAKSUDUL_CURRICULUM;
+          const count = volumes.reduce((sum, volume) => sum + volume.lessons.length, 0);
+          if (volumes.length !== 20 || count !== 120) {
+            throw new Error(`Expected 20 volumes and 120 lessons; got ${volumes.length} volumes and ${count} lessons`);
+          }
+          if (volumes.some(volume => volume.lessons.some(lesson => !lesson[0] || !lesson[1] || !lesson[2]))) {
+            throw new Error('A curriculum lesson is missing its title, explanation or reference');
+          }
+          console.log(`Validated ${volumes.length} volumes and ${count} lessons`);
+          NODE
+          grep -q 'window.MAKSUDUL_CURRICULUM' maksudul-curriculum.js
+          test "$(grep -c '^{n:' maksudul-curriculum.js)" -eq 20
+          python3 - <<'PY'
+          from pathlib import Path
+          data = Path('prophets-detail.js').read_text(encoding='utf-8')
+          rows = sum(1 for line in data.splitlines() if line.startswith('[\"'))
+          if rows != 25:
+              raise SystemExit(f'Expected detailed biographies for 25 prophets, found {rows}')
+          html = Path('index.html').read_text(encoding='utf-8')
+          for section in ('const prayerPurityDetailed=','sections.prayer.items.push(...prayerPurityDetailed)','sections.aqeedah.items.push','sections.prayer.items.push','sections.history.items.push','sections.fasting.items.push','sections.janazah.items.push'):
+              if section not in html:
+                  raise SystemExit(f'Missing expanded learning section: {section}')
+          PY
+      - name: Check required app files
+        run: |
+          test -f index.html
+          test -f manifest.webmanifest
+          test -f sw.js
+          grep -q 'function renderPage' index.html
+          grep -q 'function quranView' index.html
+          grep -q 'async function loadJuz' index.html
+          grep -q '/juz/' index.html
+          grep -q 'openJuz' index.html
+          grep -q 'function hadithView' index.html
+          grep -q 'prophets-data.js' index.html
+          grep -q 'prophets-detail.js' index.html
+          grep -q 'maksudul-curriculum.js' index.html
+          grep -q 'maksudul-curriculum-detail.js' index.html
+          ! grep -q 'function maksudView' index.html
+          ! grep -Fq "current==='maksud'" index.html
+          ! grep -Fq "['maksud'" index.html
+          grep -q 'function integrateSubjectLessons' index.html
+          grep -q 'const pageFor={1:' index.html
+          grep -q 'appendIntegratedLessons' index.html
+          grep -Fq "['family'" index.html
+          grep -Fq "['social'" index.html
+          grep -Fq "['akhirah'" index.html
+          grep -q 'function prophetsView' index.html
+          grep -q 'function prayerView' index.html
+          grep -q 'const prayerCoreReadings=' index.html
+          grep -q 'const prayerLearningChapters=' index.html
+          grep -q 'function prayerView()' index.html
+          grep -q 'দুই রাকাত নামাজ' index.html
+          grep -q 'দোয়া কুনুত' index.html
+          grep -q '৭ দিনের অনুশীলন' index.html
+          grep -q 'মকসুদুল মোমিনিন' index.html
+          grep -q 'সাহু সিজদা, ভুল সংশোধন ও সন্দেহ' index.html
+          grep -q 'হায়েজ, নিফাস ও ইস্তিহাযা' index.html
+          grep -q 'book-intro' index.html
+          test "$(grep -c '{h:' index.html)" -ge 14
+          grep -q 'ch.refs' index.html
+          grep -q 'Read the detailed biography' index.html
+          grep -q 'window.ISLAMIC_PROPHET_DETAILS' prophets-detail.js
+          grep -q 'function savedView' index.html
+          grep -q 'data-save-id' index.html
+          grep -q 'Promise.allSettled' index.html
+          grep -q "'quran-'+n+'-'+x.numberInSurah" index.html
+          grep -q "\$('dialogBody').addEventListener" index.html
+          grep -q "current==='saved'" index.html
+          grep -q 'window.ISLAMIC_PROPHETS' index.html
+          grep -q "'prophet-'+i" index.html
+          grep -q 'function globalSearch' index.html
+
