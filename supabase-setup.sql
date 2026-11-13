@@ -36,7 +36,7 @@ with check (auth.uid() = owner_uid);
 -- Seed exactly one row as the project owner using the Auth user's UUID:
 -- select id, email from auth.users;
 insert into public.creator_profile (id, owner_uid)
-values (1, 'REPLACE_WITH_ADMIN_USER_UUID'::uuid)
+values (1, '14e50af0-798b-4f0e-8ece-76d10a76e5da'::uuid)
 on conflict (id) do nothing;
 
 -- Publicly viewable profile photo bucket. Only the profile owner may write.
