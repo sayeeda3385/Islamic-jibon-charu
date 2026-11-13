@@ -101,6 +101,7 @@ janazah:{title:['জানাজা, মৃত্যু ও দাফন','Funer
 , family:{title:['পারিবারিক জীবন ও বিবাহ','Family life and marriage'],intro:['পরিবার, বিবাহ, দাম্পত্য অধিকার, পবিত্রতা ও শিশুর যত্ন সম্পর্কে কুরআন-সুন্নাহভিত্তিক পাঠ।','Quran- and Sunnah-based learning on family, marriage, marital rights, chastity and child care.'],items:[]}
 , social:{title:['সামাজিক জীবন ও মানুষের অধিকার','Social life and human rights'],intro:['প্রতিবেশী, আত্মীয়, লেনদেন, ন্যায়বিচার, সামাজিক দায়িত্ব ও উত্তম আচরণ।','Neighbours, relatives, transactions, justice, social duties and good conduct.'],items:[]}
 , akhirah:{title:['আখিরাত ও পরকাল','The Hereafter'],intro:['মৃত্যু, কিয়ামত, হিসাব, জান্নাত ও জাহান্নাম সম্পর্কে কুরআন-সুন্নাহর আলোকে পাঠ।','Learning about death, resurrection, accountability, Paradise and Hell from Quran and Sunnah.'],items:[]}
+, essential:{title:['নিত্যপাঠের সূরা ও আয়াত','Essential Surahs and Verses'],intro:['নামাজ ও দৈনন্দিন তিলাওয়াতের জন্য নির্বাচিত সূরা, আয়াত এবং পাঠের নির্দেশনা।','Selected surahs, verses and recitation guidance for prayer and daily reading.'],items:[]}
 , amal:{title:['যিকির, দরুদ ও নফল আমল','Dhikr, Salawat and voluntary worship'],intro:['কুরআনি যিকির, দরুদ, সাপ্তাহিক ও বার্ষিক নফল ইবাদত এবং আমলের আদব।','Quranic remembrance, blessings upon the Prophet, weekly and annual voluntary worship, and etiquette.'],items:[]}
 };
 
@@ -110,7 +111,7 @@ janazah:{title:['জানাজা, মৃত্যু ও দাফন','Funer
  const curriculum=window.MAKSUDUL_CURRICULUM||[];
  const extra=window.MAKSUDUL_CURRICULUM_EXPANSION||[];
  window.MAKSUDUL_INTEGRATED_STARTS={};
- const pageFor={1:'aqeedah',2:'aqeedah',3:'prayer',4:'prayer',5:'prayer',6:'prayer',7:'prayer',8:'amal',9:'fasting',10:'hajj',11:'fasting',12:'family',13:'family',14:'family',15:'social',16:'akhirah',17:'amal',18:'amal',19:'amal',20:'amal'};
+ const pageFor={1:'aqeedah',2:'aqeedah',3:'prayer',4:'prayer',5:'prayer',6:'prayer',7:'prayer',8:'prayer',9:'fasting',10:'hajj',11:'fasting',12:'family',13:'family',14:'family',15:'social',16:'akhirah',17:'amal',18:'essential',19:'amal',20:'amal'};
  const labels={aqeedah:'ঈমান ও আকিদা',prayer:'নামাজ ও পবিত্রতা',amal:'যিকির, দরুদ ও নফল আমল',fasting:'রোজা ও যাকাত',hajj:'হজ ও উমরাহ',family:'পারিবারিক জীবন ও বিবাহ',social:'সামাজিক জীবন ও মানুষের অধিকার',akhirah:'আখিরাত ও পরকাল'};
  curriculum.forEach(vol=>{
   const page=pageFor[vol.n],target=sections[page]; if(!target)return;
@@ -332,7 +333,7 @@ function renderPage(){
  else if(current==='prayer'){prayerView();appendIntegratedLessons('prayer');}
  else if(sections[current])contentView(current);
  else if(current==='tools')toolsView();
- else if(current==='essential')essentialView();
+ else if(current==='essential'){essentialView();appendIntegratedLessons('essential');}
  else if(current==='zikr')zikrView();
  else if(current==='contact')contactView();
  else if(current==='saved')savedView();
