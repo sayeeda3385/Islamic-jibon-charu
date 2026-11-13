@@ -131,7 +131,18 @@ jobs:
           grep -q "'prophet-'+i" index.html
           grep -q 'function globalSearch' index.html
           grep -q 'function contactView()' index.html
-          grep -q 'saveCreatorProfile' index.html
+          grep -q 'window.loadCreatorProfile' index.html
+          grep -q 'renderContactProfile' index.html
+          grep -q './admin.html' index.html
+          test -f admin.html
+          test -f creator-profile.js
+          test -f supabase-config.js
+          test -f supabase-setup.sql
+          node --check creator-profile.js
+          node --check supabase-config.js
+          grep -q 'signInWithPassword' admin.html
+          grep -q 'owner_uid' admin.html
+          grep -q 'enable row level security' supabase-setup.sql
           grep -q 'function appInfoEditor()' index.html
           grep -q 'bindAppInfoEditor();' index.html
           grep -q "lesson\[3\]" index.html
