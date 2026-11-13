@@ -119,8 +119,7 @@ janazah:{title:['জানাজা, মৃত্যু ও দাফন','Funer
   const supplemental=(extra.find(x=>x.n===vol.n)||{}).lessons||[];
   (vol.lessons||[]).forEach((lesson,i)=>{
    const title=lesson[0]||vol.bn,body=lesson[1]||'',refs=lesson[2]||'';
-   const detail=supplemental[i]||[];
-   const full=body+(detail[3]?'\n\nআমলের/পাঠের ধাপ: '+detail[3]:'')+(refs?'\n\nতথ্যসূত্র: '+refs:'');
+   const full=body+(lesson[3]?'\n\nআমলের/পাঠের ধাপ: '+lesson[3]:'')+(refs?'\n\nতথ্যসূত্র: '+refs:'');
    const duplicate=target.items.some(it=>it[0]===title&&it[2]===full);
    if(!duplicate)target.items.push([title,title,full,full]);
   });
