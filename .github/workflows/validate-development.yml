@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - feature/islamic-library-expansion
+      - main
   pull_request:
     branches:
       - feature/islamic-library-expansion
+      - main
   workflow_dispatch:
 
 permissions:
@@ -128,4 +130,9 @@ jobs:
           grep -q 'window.ISLAMIC_PROPHETS' index.html
           grep -q "'prophet-'+i" index.html
           grep -q 'function globalSearch' index.html
+          grep -q 'function contactView()' index.html
+          grep -q 'saveCreatorProfile' index.html
+          grep -q 'function appInfoEditor()' index.html
+          grep -q 'bindAppInfoEditor();' index.html
+          grep -q "lesson\[3\]" index.html
 

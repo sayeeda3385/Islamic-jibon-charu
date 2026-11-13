@@ -109,18 +109,15 @@ janazah:{title:['জানাজা, মৃত্যু ও দাফন','Funer
    No book-specific navigation or standalone book page is exposed. */
 (function integrateSubjectLessons(){
  const curriculum=window.MAKSUDUL_CURRICULUM||[];
- const extra=window.MAKSUDUL_CURRICULUM_EXPANSION||[];
  window.MAKSUDUL_INTEGRATED_STARTS={};
  const pageFor={1:'aqeedah',2:'aqeedah',3:'prayer',4:'prayer',5:'prayer',6:'prayer',7:'prayer',8:'prayer',9:'fasting',10:'hajj',11:'fasting',12:'family',13:'family',14:'family',15:'social',16:'akhirah',17:'amal',18:'essential',19:'amal',20:'amal'};
  const labels={aqeedah:'ঈমান ও আকিদা',prayer:'নামাজ ও পবিত্রতা',amal:'যিকির, দরুদ ও নফল আমল',fasting:'রোজা ও যাকাত',hajj:'হজ ও উমরাহ',family:'পারিবারিক জীবন ও বিবাহ',social:'সামাজিক জীবন ও মানুষের অধিকার',akhirah:'আখিরাত ও পরকাল'};
  curriculum.forEach(vol=>{
   const page=pageFor[vol.n],target=sections[page]; if(!target)return;
   if(window.MAKSUDUL_INTEGRATED_STARTS[page]===undefined)window.MAKSUDUL_INTEGRATED_STARTS[page]=target.items.length;
-  const supplemental=(extra.find(x=>x.n===vol.n)||{}).lessons||[];
   (vol.lessons||[]).forEach((lesson,i)=>{
    const title=lesson[0]||vol.bn,body=lesson[1]||'',refs=lesson[2]||'';
-   const detail=supplemental[i]||[];
-   const full=body+(detail[3]?'\n\nআমলের/পাঠের ধাপ: '+detail[3]:'')+(refs?'\n\nতথ্যসূত্র: '+refs:'');
+   const full=body+(lesson[3]?'\n\nআমলের/পাঠের ধাপ: '+lesson[3]:'')+(refs?'\n\nতথ্যসূত্র: '+refs:'');
    const duplicate=target.items.some(it=>it[0]===title&&it[2]===full);
    if(!duplicate)target.items.push([title,title,full,full]);
   });
