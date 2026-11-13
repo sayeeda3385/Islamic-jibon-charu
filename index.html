@@ -747,7 +747,7 @@ const APP_INFO_KEY='islamic-jibon-charu-app-info-v1';
 function readLocalObject(key){try{const v=JSON.parse(localStorage.getItem(key)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{};}catch(e){return {};}}
 function profileInput(key,label,value='',type='text'){return '<label class="label" for="profile-'+key+'">'+label+'</label><input class="field" style="width:100%;margin:5px 0 10px" id="profile-'+key+'" data-profile="'+key+'" type="'+type+'" value="'+safe(value)+'">';}
 const CREATOR_CONTACT={name:'',email:'',phone:'',website:'',facebook:'',youtube:'',address:'',message:'',photo:'assets/creator-photo.jpg'};
-function contactView(profile){
+function renderContactProfile(profile){
  const p=profile||window.CREATOR_PROFILE_CACHE||CREATOR_CONTACT,v=$('view');
  const fields=[
   ['email',lang==='bn'?'ইমেইল':'Email','mailto:'],
@@ -765,7 +765,11 @@ function contactView(profile){
  (p.message?'<p>'+safe(p.message)+'</p>':'<p class="muted">'+(lang==='bn'?'ইসলামিক জীবন — চারু অ্যাপের নির্মাতা ও যোগাযোগের তথ্য।':'Creator and contact details for Islamic Jibon — Charu.')+'</p>')+
  rows+
  '<p class="muted" style="margin-top:18px">'+(lang==='bn'?'এই পাতা দর্শকদের জন্য শুধু দেখার ব্যবস্থা। এখানে কেউ তথ্য সম্পাদনা বা পরিবর্তন করতে পারবে না।':'This page is read-only for visitors. Contact details cannot be edited here.')+'</p><p class="muted"><a href="./admin.html">'+(lang==='bn'?'অ্যাডমিন লগইন':'Admin sign in')+'</a></p></div>';
- if(!profile&&!window.CREATOR_PROFILE_CACHE&&window.loadCreatorProfile)window.loadCreatorProfile().then(data=>{if(data&&current==='contact')contactView(data);});
+}
+function contactView(){
+ const profile=window.CREATOR_PROFILE_CACHE||null;
+ renderContactProfile(profile);
+ if(!profile&&window.loadCreatorProfile)window.loadCreatorProfile().then(data=>{if(data&&current==='contact')renderContactProfile(data);});
 }
 function appInfoEditor(){
  const p=readLocalObject(APP_INFO_KEY);
