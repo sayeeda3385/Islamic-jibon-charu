@@ -44,6 +44,9 @@
 <script src="./prophets-detail.js"></script>
 <script src="./maksudul-curriculum.js"></script>
 <script src="./maksudul-curriculum-detail.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<script src="./creator-profile.js"></script>
 <script>
 'use strict';
 const QAPI='https://api.alquran.cloud/v1';
@@ -744,8 +747,8 @@ const APP_INFO_KEY='islamic-jibon-charu-app-info-v1';
 function readLocalObject(key){try{const v=JSON.parse(localStorage.getItem(key)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{};}catch(e){return {};}}
 function profileInput(key,label,value='',type='text'){return '<label class="label" for="profile-'+key+'">'+label+'</label><input class="field" style="width:100%;margin:5px 0 10px" id="profile-'+key+'" data-profile="'+key+'" type="'+type+'" value="'+safe(value)+'">';}
 const CREATOR_CONTACT={name:'',email:'',phone:'',website:'',facebook:'',youtube:'',address:'',message:'',photo:'assets/creator-photo.jpg'};
-function contactView(){
- const p=CREATOR_CONTACT,v=$('view');
+function renderContactProfile(profile){
+ const p=profile||window.CREATOR_PROFILE_CACHE||CREATOR_CONTACT,v=$('view');
  const fields=[
   ['email',lang==='bn'?'ইমেইল':'Email','mailto:'],
   ['phone',lang==='bn'?'মোবাইল':'Phone','tel:'],
@@ -761,7 +764,12 @@ function contactView(){
  '<h2>'+(p.name?safe(p.name):(lang==='bn'?'অ্যাপ নির্মাতা':'App creator'))+'</h2>'+
  (p.message?'<p>'+safe(p.message)+'</p>':'<p class="muted">'+(lang==='bn'?'ইসলামিক জীবন — চারু অ্যাপের নির্মাতা ও যোগাযোগের তথ্য।':'Creator and contact details for Islamic Jibon — Charu.')+'</p>')+
  rows+
- '<p class="muted" style="margin-top:18px">'+(lang==='bn'?'এই পাতা দর্শকদের জন্য শুধু দেখার ব্যবস্থা। এখানে কেউ তথ্য সম্পাদনা বা পরিবর্তন করতে পারবে না।':'This page is read-only for visitors. Contact details cannot be edited here.')+'</p></div>';
+ '<p class="muted" style="margin-top:18px">'+(lang==='bn'?'এই পাতা দর্শকদের জন্য শুধু দেখার ব্যবস্থা। এখানে কেউ তথ্য সম্পাদনা বা পরিবর্তন করতে পারবে না।':'This page is read-only for visitors. Contact details cannot be edited here.')+'</p><p class="muted"><a href="./admin.html">'+(lang==='bn'?'অ্যাডমিন লগইন':'Admin sign in')+'</a></p></div>';
+}
+function contactView(){
+ const profile=window.CREATOR_PROFILE_CACHE||null;
+ renderContactProfile(profile);
+ if(!profile&&window.loadCreatorProfile)window.loadCreatorProfile().then(data=>{if(data&&current==='contact')renderContactProfile(data);});
 }
 function appInfoEditor(){
  const p=readLocalObject(APP_INFO_KEY);

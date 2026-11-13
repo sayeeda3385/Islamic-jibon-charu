@@ -36,6 +36,18 @@ jobs:
           Path("/tmp/app-inline.js").write_text("\\n".join(scripts), encoding="utf-8")
           PY
           node --check /tmp/app-inline.js
+      - name: Check admin page script syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("admin.html").read_text(encoding="utf-8")
+          scripts = [part for part in re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.S) if part.strip()]
+          if not scripts:
+              raise SystemExit("No admin script found")
+          Path("/tmp/admin-inline.js").write_text("\\n".join(scripts), encoding="utf-8")
+          PY
+          node --check /tmp/admin-inline.js
       - name: Check external data script syntax
         run: |
           test -f prophets-data.js
@@ -131,7 +143,18 @@ jobs:
           grep -q "'prophet-'+i" index.html
           grep -q 'function globalSearch' index.html
           grep -q 'function contactView()' index.html
-          grep -q 'saveCreatorProfile' index.html
+          grep -q 'window.loadCreatorProfile' index.html
+          grep -q 'renderContactProfile' index.html
+          grep -q './admin.html' index.html
+          test -f admin.html
+          test -f creator-profile.js
+          test -f supabase-config.js
+          test -f supabase-setup.sql
+          node --check creator-profile.js
+          node --check supabase-config.js
+          grep -q 'signInWithPassword' admin.html
+          grep -q 'owner_uid' admin.html
+          grep -q 'enable row level security' supabase-setup.sql
           grep -q 'function appInfoEditor()' index.html
           grep -q 'bindAppInfoEditor();' index.html
           grep -q "lesson\[3\]" index.html

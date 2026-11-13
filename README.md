@@ -80,3 +80,11 @@
 - Quran reader attribution: the current reader calls AlQuran Cloud; its terms identify the Arabic text's curation sources and require faithful display, while translation and recitation rights remain tied to their individual editions/rights-holders. The Quran reader now links to these terms at the point of use.
 
 - A second expansion added volume-specific chapters on the five pillars, tawhid, istinja, Jumu'ah, prayer times and qada, Eid, weekly voluntary worship, fasting exemptions and expiation, Hajj day sequence, zakat nisab, family rights, menstruation/postpartum rulings, child care, social rights, afterlife, dua etiquette, Surah al-Fatihah, salawat verification and annual voluntary fasts.
+
+
+## Secure creator profile administration
+- The standalone `admin.html` page provides sign-in only; create the owner account manually in Supabase Auth.
+- Public creator profile reads are connected through `creator-profile.js`; only the configured owner can update the profile or upload its photo.
+- Follow [SUPABASE-SETUP.md](./SUPABASE-SETUP.md) and run [supabase-setup.sql](./supabase-setup.sql) before using the editor.
+- Add only the Supabase Project URL and publishable/anon key to `supabase-config.js`. Never commit a service_role/secret key.
+- Until the Supabase project and configuration are supplied, the contact page continues to show its safe fallback profile and the admin page remains unavailable.

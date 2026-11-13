@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b3b32">
+<title>অ্যাডমিন প্যানেল — ইসলামিক জীবন চারু</title>
+<style>
+:root{color-scheme:light;--green:#0b3b32;--green2:#17634e;--paper:#f4f7f4;--line:#dce7df;--muted:#64766e}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:#17352d;font:16px/1.6 system-ui,"Noto Sans Bengali",sans-serif}
+header{background:linear-gradient(120deg,#082d27,#17634e);color:#fff;padding:20px}header>div,main{max-width:760px;margin:auto}h1{font-size:22px;margin:0}header p{margin:4px 0;color:#d7e8df}
+main{padding:22px 16px}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 28px #0b3b3210}
+h2{font-size:19px;color:var(--green);margin:0 0 8px}.muted{color:var(--muted);font-size:13px}
+label{display:block;font-weight:700;font-size:13px;margin:12px 0 5px}
+input,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;background:white;color:#17352d}
+textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:9px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer}
+.primary{background:var(--green);color:white}.secondary{background:#e5eee8;color:var(--green)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.status{margin-top:12px;padding:10px;border-radius:9px;background:#f0f5f1;font-size:13px;white-space:pre-wrap}
+.hidden{display:none!important}.preview{width:112px;height:112px;border-radius:50%;object-fit:cover;background:#edf3ee;border:2px solid var(--line);display:block;margin:10px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+a{color:var(--green)}@media(max-width:560px){.grid{grid-template-columns:1fr}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<header><div><h1>ইসলামিক জীবন — চারু</h1><p>নির্মাতার তথ্য সম্পাদনা • Creator profile administration</p></div></header>
+<main>
+<section id="setupWarning" class="panel hidden">
+<h2>প্রাথমিক সংযোগ বাকি</h2>
+<p>প্রথমে <code>supabase-config.js</code>-এ Supabase Project URL এবং Publishable/anon key বসাতে হবে। এরপর <code>supabase-setup.sql</code> নির্দেশনা অনুসারে Auth user, টেবিল ও Storage policy তৈরি করুন।</p>
+<p class="muted">কখনোই service_role key এখানে বা GitHub-এ যোগ করবেন না।</p>
+</section>
+<section id="loginPanel" class="panel">
+<h2>অ্যাডমিন লগইন</h2>
+<p class="muted">শুধু আগে থেকে Supabase Auth-এ তৈরি করা অনুমোদিত অ্যাডমিন অ্যাকাউন্ট ব্যবহার করুন। এখানে নতুন অ্যাকাউন্ট খোলার সুবিধা নেই।</p>
+<form id="loginForm">
+<label for="email">অ্যাডমিন ইমেইল</label><input id="email" type="email" autocomplete="username" required>
+<label for="password">পাসওয়ার্ড</label><input id="password" type="password" autocomplete="current-password" required>
+<div class="actions"><button class="primary" type="submit">লগইন</button><a class="secondary" href="./index.html" style="text-decoration:none;padding:11px 16px">অ্যাপে ফিরে যান</a></div>
+</form><div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+</section>
+<section id="editorPanel" class="panel hidden">
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><h2>নির্মাতার পরিচিতি</h2><p class="muted">এখানে সংরক্ষণ করলে অ্যাপের যোগাযোগ পাতায় সবার জন্য আপডেট হবে।</p></div><button id="logoutBtn" class="secondary" type="button">লগআউট</button></div>
+<form id="profileForm">
+<div class="grid">
+<div><label for="name">নাম</label><input id="name" maxlength="120"></div>
+<div><label for="phone">মোবাইল</label><input id="phone" maxlength="40"></div>
+<div><label for="profileEmail">ইমেইল (প্রদর্শনের জন্য)</label><input id="profileEmail" type="email" maxlength="180"></div>
+<div><label for="website">ওয়েবসাইট (https://)</label><input id="website" type="url" maxlength="300"></div>
+<div><label for="facebook">ফেসবুক লিংক (https://)</label><input id="facebook" type="url" maxlength="300"></div>
+<div><label for="youtube">ইউটিউব লিংক (https://)</label><input id="youtube" type="url" maxlength="300"></div>
+</div>
+<label for="address">ঠিকানা</label><input id="address" maxlength="250">
+<label for="message">সংক্ষিপ্ত পরিচিতি</label><textarea id="message" maxlength="1200"></textarea>
+<label for="photo">প্রোফাইল ছবি (JPG, PNG বা WebP; সর্বোচ্চ ৩ MB)</label><input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+<img id="photoPreview" class="preview hidden" alt="ছবির প্রিভিউ">
+<div class="actions"><button class="primary" type="submit">পরিবর্তন সংরক্ষণ</button><a class="secondary" href="./index.html" style="text-decoration:none;padding:11px 16px">যোগাযোগ পাতা দেখুন</a></div>
+</form><div id="editorStatus" class="status" role="status" aria-live="polite"></div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<script>
+(function(){
+ const cfg=window.CHARU_SUPABASE_CONFIG||{}, configured=!!(cfg.url&&cfg.anonKey&&window.supabase);
+ const $=id=>document.getElementById(id);
+ const login=$('loginPanel'),editor=$('editorPanel'),warning=$('setupWarning');
+ if(!configured){warning.classList.remove('hidden');$('loginStatus').textContent='Supabase সংযোগ কনফিগার করা হয়নি।';$('loginForm').querySelector('button').disabled=true;return;}
+ const sb=window.supabase.createClient(cfg.url,cfg.anonKey);
+ let currentProfile=null;
+ const say=(id,msg)=>$(id).textContent=msg;
+ async function openEditor(user){
+   const {data,error}=await sb.from('creator_profile').select('*').eq('id',1).single();
+   if(error||!data||data.owner_uid!==user.id){await sb.auth.signOut();say('loginStatus','এই অ্যাকাউন্ট অ্যাডমিন হিসেবে অনুমোদিত নয়।');return;}
+   currentProfile=data;login.classList.add('hidden');editor.classList.remove('hidden');
+   ['name','phone','website','facebook','youtube','address','message'].forEach(k=>$(k).value=data[k]||'');
+   $('profileEmail').value=data.email||'';
+   if(data.photo_url){$('photoPreview').src=data.photo_url;$('photoPreview').classList.remove('hidden');}
+   say('editorStatus','অ্যাডমিন হিসেবে লগইন হয়েছে।');
+ }
+ $('loginForm').addEventListener('submit',async e=>{
+   e.preventDefault();say('loginStatus','লগইন যাচাই হচ্ছে…');
+   const {data,error}=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
+   if(error){say('loginStatus','লগইন হয়নি: '+error.message);return;}
+   await openEditor(data.user);
+ });
+ $('photo').addEventListener('change',()=>{
+   const f=$('photo').files[0];if(!f)return;
+   if(!['image/jpeg','image/png','image/webp'].includes(f.type)||f.size>3*1024*1024){say('editorStatus','ছবিটি JPG, PNG বা WebP হতে হবে এবং ৩ MB-এর মধ্যে হতে হবে।');$('photo').value='';return;}
+   $('photoPreview').src=URL.createObjectURL(f);$('photoPreview').classList.remove('hidden');
+ });
+ $('profileForm').addEventListener('submit',async e=>{
+   e.preventDefault();say('editorStatus','সংরক্ষণ করা হচ্ছে…');
+   const {data:{user}}=await sb.auth.getUser();
+   if(!user||!currentProfile||user.id!==currentProfile.owner_uid){say('editorStatus','অ্যাডমিন সেশন যাচাই করা যায়নি। আবার লগইন করুন।');return;}
+   const payload={name:$('name').value.trim(),email:$('profileEmail').value.trim(),phone:$('phone').value.trim(),website:$('website').value.trim(),facebook:$('facebook').value.trim(),youtube:$('youtube').value.trim(),address:$('address').value.trim(),message:$('message').value.trim(),updated_at:new Date().toISOString()};
+   for(const key of ['website','facebook','youtube'])if(payload[key]&&!/^https:\/\//i.test(payload[key])){say('editorStatus',key+' লিংক https:// দিয়ে শুরু হতে হবে।');return;}
+   const file=$('photo').files[0];
+   if(file){
+     const ext=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg';
+     const {error:uploadError}=await sb.storage.from('creator-assets').upload('creator-profile/avatar.'+ext,file,{upsert:true,contentType:file.type,cacheControl:'3600'});
+     if(uploadError){say('editorStatus','ছবি আপলোড হয়নি: '+uploadError.message);return;}
+     payload.photo_url=sb.storage.from('creator-assets').getPublicUrl('creator-profile/avatar.'+ext).data.publicUrl;
+   }
+   const {data,error}=await sb.from('creator_profile').update(payload).eq('id',1).select().single();
+   if(error){say('editorStatus','সংরক্ষণ হয়নি: '+error.message);return;}
+   currentProfile=data;$('photo').value='';say('editorStatus','সফলভাবে সংরক্ষিত হয়েছে। এখন অ্যাপের যোগাযোগ পাতায় আপডেটটি দেখা যাবে।');
+ });
+ $('logoutBtn').onclick=async()=>{await sb.auth.signOut();currentProfile=null;editor.classList.add('hidden');login.classList.remove('hidden');say('loginStatus','লগআউট সম্পন্ন হয়েছে।');};
+ sb.auth.getSession().then(({data})=>{if(data.session)openEditor(data.session.user);});
+})();
+</script>
+</body></html>
