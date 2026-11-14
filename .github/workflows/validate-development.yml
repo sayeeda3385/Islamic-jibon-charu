@@ -30,10 +30,10 @@ jobs:
           from pathlib import Path
           import re
           html = Path("index.html").read_text(encoding="utf-8")
-          scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.S)
+          scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, flags=re.S)
           if not scripts:
               raise SystemExit("No inline application script found")
-          Path("/tmp/app-inline.js").write_text("\\n".join(scripts), encoding="utf-8")
+          Path("/tmp/app-inline.js").write_text("\n".join(scripts), encoding="utf-8")
           PY
           node --check /tmp/app-inline.js
       - name: Check admin page script syntax
@@ -42,10 +42,10 @@ jobs:
           from pathlib import Path
           import re
           html = Path("admin.html").read_text(encoding="utf-8")
-          scripts = [part for part in re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.S) if part.strip()]
+          scripts = [part for part in re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, flags=re.S) if part.strip()]
           if not scripts:
               raise SystemExit("No admin script found")
-          Path("/tmp/admin-inline.js").write_text("\\n".join(scripts), encoding="utf-8")
+          Path("/tmp/admin-inline.js").write_text("\n".join(scripts), encoding="utf-8")
           PY
           node --check /tmp/admin-inline.js
       - name: Check external data script syntax
